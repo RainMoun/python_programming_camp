@@ -138,3 +138,22 @@ def raise_money(user):
     logging.info(user + ' Raise')
 
 
+def operation(user):
+    input_operate = input("please select what you want to do, input w for Cash withdrawal, c for consumption"
+                          ", r for Repayment ,rr for raise and b for back").strip()  # 取现，消费，还款，提额
+    if input_operate == 'w':
+        withdraw_money(user)
+        return True
+    elif input_operate == 'c':
+        buy_item(user)
+        return True
+    elif input_operate == 'r':
+        repayment(user)
+        return True
+    elif input_operate == 'rr':
+        raise_money(user)
+        return True
+    elif input_operate == 'b':
+        return False
+
+
