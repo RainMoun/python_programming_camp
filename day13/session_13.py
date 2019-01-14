@@ -39,6 +39,44 @@ def total_average_score(subject):
     print("Subject {} average score: {}".format(subject, sum(sum_score) / len(sum_score)))
 
 
+def somebody_subject_score(input_name, subject):
+    print("Name: {}, subject {} score: {}".format(input_name, subject
+                                                  , std_lst[input_name].score[subject]))
+
+
+def delete_somebody(name):
+    std_lst.pop(name)
+
+
+def performing_operations():
+    operate = [-1, "查询学生所有成绩", "查看所有人某科目成绩", "查看所有人某科目平均分", "查看某人某科目成绩",
+               "删除某位学生信息", "退出"]
+    print("请选择您所要执行的操作编号：")
+    for i in range(1, len(operate)):
+        print("{}. {}。".format(i, operate[i]))
+    input_operate = int(input())
+    if input_operate == 6:
+        return 0
+    else:
+        if input_operate == 1:
+            input_name = input("请输入查询学生姓名：")
+            someone_score(input_name)
+        elif input_operate == 2:
+            input_subject = input("请输入查询科目名字：")
+            everybody_subject_score(input_subject)
+        elif input_operate == 3:
+            input_subject = input("请输入查询科目名字：")
+            total_average_score(input_subject)
+        elif input_operate == 4:
+            input_name = input("请输入查询学生姓名：")
+            input_subject = input("请输入查询科目名字：")
+            somebody_subject_score(input_name, input_subject)
+        elif input_operate == 5:
+            input_name = input("请输入删除学生姓名：")
+            delete_somebody(input_name)
+        return 1
+
+
 if __name__ == '__main__':
     # 初始定义部分
     std1 = Student("Kobe")
@@ -50,23 +88,10 @@ if __name__ == '__main__':
     std2.score['pass'] = 90
     std2.score['rebound'] = 90
     std_lst = {"Kobe": std1, "James": std2}
-    # 根据姓名查看所有成绩
-    someone_score("Kobe")
-    print("###########################################################################")
-    # 查看所有人的某学科成绩
-    everybody_subject_score("shoot")
-    print("###########################################################################")
-    # 查看总平均分
-    total_average_score("shoot")
-    print("###########################################################################")
-    # 查看某人学科成绩
-    selected_name = "Kobe"
-    selected_subject = "no_pass_look"
-    print("Name: {}, subject {} score: {}".format(selected_name, selected_subject
-                                                  , std_lst[selected_name].score[selected_subject]))
-    print("###########################################################################")
-    # 根据姓名删除学生
-    delete_name = "James"
-    std_lst.pop(delete_name)
-    for k in std_lst:
-        print(k)
+    print("欢迎使用学生成绩管理系统：")
+    tag = 1
+    while tag:
+        tag = performing_operations()
+
+
+
