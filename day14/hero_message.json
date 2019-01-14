@@ -1,0 +1,4 @@
+{"Angela": {"level": 1, "hp": 350, "Q_hurt": 80, "W_hurt": 50, "E_hurt": 75},
+ "The Monkey King": {"level": 2, "hp": 420, "Q_hurt": 70, "W_hurt": 65, "E_hurt": 60},
+ "god Erlang": {"level": 5, "hp": 580, "Q_hurt": 110, "W_hurt": 95, "E_hurt": 100},
+ "Liu Bei": {"level": 1, "hp": 390, "Q_hurt": 80, "W_hurt": 55, "E_hurt": 75}}
