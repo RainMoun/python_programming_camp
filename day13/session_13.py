@@ -68,5 +68,5 @@ if __name__ == '__main__':
     # 根据姓名删除学生
     delete_name = "James"
     std_lst.pop(delete_name)
-    for j in std_lst:
-        print(j)
+    for k in std_lst:
+        print(k)
