@@ -22,4 +22,4 @@ class Car(metaclass=CarMeta):
         self.capacity = capacity
 
 
-car1 = Car("五菱宏光", "2018.1.1", '12312312312', 10)
+car1 = Car("五菱宏光", "2018.1.1", '12312312312', 10)  # hello
