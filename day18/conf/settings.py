@@ -1,0 +1,6 @@
+manager_db = 'C:/Users/Administrator/Desktop/python_programming_camp/day18/db/manager_message.pkl'
+teacher_db = 'C:/Users/Administrator/Desktop/python_programming_camp/day18/db/teacher_message.pkl'
+student_db = 'C:/Users/Administrator/Desktop/python_programming_camp/day18/db/student_message.pkl'
+school_db = 'C:/Users/Administrator/Desktop/python_programming_camp/day18/db/school_message.pkl'
+class_db = 'C:/Users/Administrator/Desktop/python_programming_camp/day18/db/class_message.pkl'
+score_db = 'C:/Users/Administrator/Desktop/python_programming_camp/day18/db/score_message.pkl'
