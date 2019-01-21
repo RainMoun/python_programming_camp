@@ -1,0 +1,13 @@
+2019-01-21 13:03:23 PM - root - INFO -common:  yufeng 注册了
+2019-01-21 14:39:47 PM - root - INFO -common:  admin 注册了
+2019-01-21 14:40:46 PM - root - INFO -manager_interface:  Shanghai 学校创建了
+2019-01-21 14:43:38 PM - root - INFO -manager_interface:  Shanghai 学校创建了
+2019-01-21 14:47:45 PM - root - INFO -manager_interface:  Shanghai 学校创建了
+2019-01-21 14:54:46 PM - root - INFO -manager_interface:  New York 学校创建了
+2019-01-21 15:04:22 PM - root - INFO -manager_interface:  Shanghai 的 Albert 老师 的 AI 课程创建了
+2019-01-21 15:10:32 PM - root - INFO -manager_interface:  Shanghai 的 Kobe 老师创建了
+2019-01-21 15:10:52 PM - root - INFO -manager_interface:  Shanghai 的 Kobe 老师 的 Python 课程创建了
+2019-01-21 15:14:38 PM - root - INFO -manager_interface:  New York 的 yufeng 老师创建了
+2019-01-21 15:15:01 PM - root - INFO -manager_interface:  New York 的 yufeng 老师 的 ML 课程创建了
+2019-01-21 15:19:36 PM - root - INFO -teacher_interface:  yufeng 老师对成绩进行了操作
+2019-01-21 15:21:27 PM - root - INFO -common:  Kobe 注册了
