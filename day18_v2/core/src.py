@@ -108,15 +108,19 @@ def create_teacher():
 
 
 func_dic = {
-    '1': {'1': login, '2': query_course, '3': logout},  # 查看课程后可查看课程对应的学生以及录入、修改他们的分数
-    '2': {'1': login, '2': register, '3': query_score, '4': logout},  # 查看分数时可选择对应学校、任教讲师、课程
-    '3': {'1': login, '2': register, '3': create_school, '4': create_course, '5': create_teacher, '6': logout}
-}
-
-fun_explain = {
-    '1': {'1': '登录', '2': '查看课程', '3': '登出'},  # 查看课程后可查看课程对应的学生以及录入、修改他们的分数
-    '2': {'1': '登录', '2': '注册', '3': '查询分数', '4': '登出'},  # 查看分数时可选择对应学校、任教讲师、课程
-    '3': {'1': '登录', '2': '注册', '3': '创建学校', '4': '创建课程', '5': '创建讲师', '6': '登出'}
+    '1': {'1': {'fun': login, 'explain': '登录'},
+          '2': {'fun': query_course, 'explain': '查看课程'},
+          '3': {'fun': logout, 'explain': '登出'}},  # 查看课程后可查看课程对应的学生以及录入、修改他们的分数
+    '2': {'1': {'fun': login, 'explain': '登录'},
+          '2': {'fun': register, 'explain': '注册'},
+          '3': {'fun': query_score, 'explain': '查询分数'},
+          '4': {'fun': logout, 'explain': '登出'}},  # 查看分数时可选择对应学校、任教讲师、课程
+    '3': {'1': {'fun': login, 'explain': '登录'},
+          '2': {'fun': register, 'explain': '注册'},
+          '3': {'fun': create_school, 'explain': '创建学校'},
+          '4': {'fun': create_course, 'explain': '创建课程'},
+          '5': {'fun': create_teacher, 'explain': '创建讲师'},
+          '6': {'fun': logout, 'explain': '登出'}}
 }
 
 
@@ -131,10 +135,10 @@ def run():
         func_dict = func_dic[choice_status]
         while True:
             for i in range(1, len(func_dict) + 1):
-                print('{}. {}'.format(i, fun_explain[user_data['status']][str(i)]))
+                print('{}. {}'.format(i, func_dict[str(i)]['explain']))
             choice_func = input('请选择:').strip()
             if choice_func in func_dict:
-                func_dict[choice_func]()
+                func_dict[choice_func]['fun']()
             if choice_func == str(len(func_dict)):
                 break
 
