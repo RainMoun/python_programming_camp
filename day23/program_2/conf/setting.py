@@ -1,11 +1,10 @@
 import logging
 import os
 
-user_db = 'C:/Users/Administrator/Desktop/PycharmProjects/python_camp/day_23/program_2/db/user_db.pk'
-
-
+ip_port = ('127.0.0.1', 8080)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 BASE_DB = os.path.join(BASE_DIR, 'db')
+USER_DB = BASE_DIR + '/db'
 BASE_LOG = os.path.join(BASE_DIR, 'log')
 
 # 如果不存在定义的日志目录就创建一个
