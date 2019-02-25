@@ -73,37 +73,19 @@ def register():
 
 @login_auth
 def single_chat():
-    input_select = input("1.与好友聊天 2.等待好友寻找 3.退出").strip()
-    if input_select == '1':
-        friend_name = user_data['name'].find_friends()
-        if friend_name:
-            sock = socket.socket(type=socket.SOCK_DGRAM)
-            sock.bind(user_data['name'].ip_port)
-            while True:
-                message = input('To ' + friend_name + '(结束聊天请输入q):').strip()
-                if message == 'q':
-                    break
-                messages = ('0||' + friend_name + '||' + message).encode('utf-8')
-                sock.sendto(messages, setting.ip_port)
-                data, addr = sock.recvfrom(1024)
-                message = data.decode('utf-8').strip().split('||')
-                print("{}:{}".format(message[0], message[1]))
-            sock.close()
-    elif input_select == '2':
-        sock = socket.socket(type=socket.SOCK_DGRAM)
-        sock.bind(user_data['name'].ip_port)
-        while True:
-            data, addr = sock.recvfrom(1024)
-            data = data.decode('utf-8')
-            print(data)
-            message = data.strip().split('||')
-            print(message)
-            print("{}:{}".format(message[0], message[1]))
-            message_input = input('To ' + message[0] + '(结束聊天请输入q):').strip()
-            if message_input == 'q':
-                break
-            messages = ('0||' + message[0] + '||' + message_input).encode('utf-8')
-            sock.sendto(messages, setting.ip_port)
+    friend_name = user_data['name'].find_friends()
+    sock = socket.socket(type=socket.SOCK_DGRAM)
+    sock.bind(user_data['name'].ip_port)
+    p_wait = Process(target=wait_message, args=(sock,))
+    p_wait.start()
+    while True:
+        message = input('To ' + friend_name + '(结束聊天请输入q):').strip()
+        if message == 'q':
+            p_wait.terminate()
+            break
+        messages = ('0||' + friend_name + '||' + message).encode('utf-8')
+        sock.sendto(messages, setting.ip_port)
+    sock.close()
 
 
 @login_auth
