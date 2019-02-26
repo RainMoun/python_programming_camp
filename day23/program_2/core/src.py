@@ -20,7 +20,11 @@ def login_auth(func):
 
 
 def logout():
-    user_data['status'] = None
+    sock = socket.socket(type=socket.SOCK_DGRAM)
+    sock.bind(user_data['name'].ip_port)
+    messages = ('3||' + user_data['name'].name).encode('utf-8')
+    sock.sendto(messages, setting.ip_port)  # 向服务器发送用户下线信息
+    sock.close()
     user_data['name'] = None
 
 
@@ -39,7 +43,7 @@ def login():
             sock = socket.socket(type=socket.SOCK_DGRAM)
             sock.bind(now_user.ip_port)
             messages = ('2||' + name).encode('utf-8')
-            sock.sendto(messages, setting.ip_port)
+            sock.sendto(messages, setting.ip_port)  # 向服务器发送用户登录信息
             sock.close()
             user_data['name'] = now_user
             print(msg)
