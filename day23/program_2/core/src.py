@@ -4,8 +4,10 @@ from lib_day23_program_2 import common
 import logging.config
 import socket
 import setting
+import time
 user_data = {
-    'name': None
+    'name': None,
+    'client': None
 }
 
 
@@ -20,11 +22,9 @@ def login_auth(func):
 
 
 def logout():
-    sock = socket.socket(type=socket.SOCK_DGRAM)
-    sock.bind(user_data['name'].ip_port)
     messages = ('3||' + user_data['name'].name).encode('utf-8')
-    sock.sendto(messages, setting.ip_port)  # 向服务器发送用户下线信息
-    sock.close()
+    user_data['client'].sendto(messages, setting.ip_port)  # 向服务器发送用户下线信息
+    user_data['client'].close()
     user_data['name'] = None
 
 
@@ -42,9 +42,10 @@ def login():
         if flag:
             sock = socket.socket(type=socket.SOCK_DGRAM)
             sock.bind(now_user.ip_port)
+            user_data['client'] = sock
             messages = ('2||' + name).encode('utf-8')
-            sock.sendto(messages, setting.ip_port)  # 向服务器发送用户登录信息
-            sock.close()
+            user_data['client'].sendto(messages, setting.ip_port)  # 向服务器发送用户登录信息
+            # sock.close()
             user_data['name'] = now_user
             print(msg)
             break
@@ -75,29 +76,95 @@ def register():
             print('两次密码不一致')
 
 
+def receive_msg():
+    # sock = socket.socket(type=socket.SOCK_DGRAM)
+    # sock.bind(user_data['name'].ip_port)
+    while True:
+        try:
+            time.sleep(0.1)
+            msg, address = user_data['client'].recvfrom(1024)
+            msg = msg.decode('utf-8')
+            message = msg.strip().split('||')
+            if message[1] == 'q':
+                print('对方已下线')
+                break
+            print("{}:{}".format(message[0], message[1]))
+            msg = input('发送消息>>:').strip()
+            messages = ('0||' + message[0] + '||' + msg).encode('utf-8')
+            user_data['client'].sendto(messages, address)
+            if msg == 'q':
+                break
+        except Exception:
+            break
+    # sock.close()
+
+
+def send_msg(friend_name):
+    # sock = socket.socket(type=socket.SOCK_DGRAM)
+    # sock.bind(user_data['name'].ip_port)
+    while True:
+        try:
+            msg = input('发送信息>>:').strip()
+            message = ('0||' + friend_name + '||' + msg).encode('utf-8')
+            user_data['client'].sendto(message, setting.ip_port)
+            if msg == 'q':
+                break
+            time.sleep(0.1)
+            msg, address = user_data['client'].recvfrom(1024)
+            msg = msg.decode('utf-8')
+            message = msg.strip().split('||')
+            if message[1] == 'q':
+                print('对方已下线')
+                break
+            print("{}:{}".format(message[0], message[1]))
+            send_msg(friend_name)
+        except Exception:
+            break
+    # sock.close()
+
+
+single_func_dict = {
+    '1': receive_msg,
+    '2': send_msg
+}
+
+
 @login_auth
 def single_chat():
-    friend_name = user_data['name'].find_friends()
-    sock = socket.socket(type=socket.SOCK_DGRAM)
-    sock.bind(user_data['name'].ip_port)
-    p_wait = Process(target=wait_message, args=(sock,))
-    p_wait.start()
-    while True:
-        message = input('To ' + friend_name + '(结束聊天请输入q):').strip()
-        if message == 'q':
-            p_wait.terminate()
-            break
-        messages = ('0||' + friend_name + '||' + message).encode('utf-8')
-        sock.sendto(messages, setting.ip_port)
-    sock.close()
+    print("""
+        1 接收消息
+        2 发送消息
+        """)
+    choice = input('请选择要进入的状态>>:').strip()
+    if choice not in func_dict:
+        return
+    if choice == '1':
+        receive_msg()
+    if choice == '2':
+        friend_name = user_data['name'].find_friends()
+        send_msg(friend_name)
+
+# 多线程实现
+# @login_auth
+# def single_chat():
+#     friend_name = user_data['name'].find_friends()
+#     p_wait = Process(target=wait_message)
+#     p_wait.start()
+#     while True:
+#         message = input('To ' + friend_name + '(结束聊天请输入q):').strip()
+#         if message == 'q':
+#             p_wait.terminate()
+#             break
+#         messages = ('0||' + friend_name + '||' + message).encode('utf-8')
+#         user_data['client'].sendto(messages, setting.ip_port)
+#
+#
 
 
 @login_auth
 def multi_person_chat():
     group_name, group_lst = user_data['name'].select_group_chat()
-    sock = socket.socket(type=socket.SOCK_DGRAM)
-    sock.bind(user_data['name'].ip_port)
-    p_wait = Process(target=wait_message, args=(sock,))
+    p_wait = Process(target=wait_message)
     p_wait.start()
     while True:
         message = input('To ' + group_name + '(结束聊天请输入q):').strip()
@@ -105,12 +172,12 @@ def multi_person_chat():
             p_wait.terminate()
             break
         messages = ('1||' + group_name + '||' + ' '.join(group_lst) + '||' + message).encode('utf-8')
-        sock.sendto(messages, setting.ip_port)
+        user_data['client'].sendto(messages, setting.ip_port)
 
 
-def wait_message(sock):
+def wait_message():
     while True:
-        data, addr = sock.recvfrom(1024)
+        data, addr = user_data['client'].recvfrom(1024)
         data = data.decode('utf-8')
         message = data.strip().split('||')
         print("{}:{}".format(message[0], message[1]))
