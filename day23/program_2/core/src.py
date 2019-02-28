@@ -23,8 +23,14 @@ def login_auth(func):
 
 def logout():
     messages = ('3||' + user_data['name'].name).encode('utf-8')
-    user_data['client'].sendto(messages, setting.ip_port)  # 向服务器发送用户下线信息
-    user_data['client'].close()
+    if user_data['client']:
+        user_data['client'].sendto(messages, setting.ip_port)  # 向服务器发送用户下线信息
+        user_data['client'].close()
+    else:
+        sock = socket.socket(type=socket.SOCK_DGRAM)
+        sock.bind(user_data['name'].ip_port)
+        sock.sendto(messages, setting.ip_port)
+        sock.close()
     user_data['name'] = None
 
 
@@ -161,26 +167,34 @@ def single_chat():
 #
 
 
+# 无法在多线程中使用user_data['client']，原因不明。故关闭字典中的socket，重新创建一个
 @login_auth
 def multi_person_chat():
+    user_data['client'].close()
+    user_data['client'] = None
+    sock = socket.socket(type=socket.SOCK_DGRAM)
+    sock.bind(user_data['name'].ip_port)
     group_name, group_lst = user_data['name'].select_group_chat()
-    p_wait = Process(target=wait_message)
+    p_wait = Process(target=wait_message, args=(sock, ))
     p_wait.start()
     while True:
         message = input('To ' + group_name + '(结束聊天请输入q):').strip()
         if message == 'q':
             p_wait.terminate()
             break
-        messages = ('1||' + group_name + '||' + ' '.join(group_lst) + '||' + message).encode('utf-8')
-        user_data['client'].sendto(messages, setting.ip_port)
+        messages = ('1||' + group_name + '||' + ' '.join(group_lst) + '||'
+                    + user_data['name'].name + '||' + message).encode('utf-8')
+        sock.sendto(messages, setting.ip_port)
+        time.sleep(0.1)
+    sock.close()
 
 
-def wait_message():
+def wait_message(sock):
     while True:
-        data, addr = user_data['client'].recvfrom(1024)
+        data, addr = sock.recvfrom(1024)
         data = data.decode('utf-8')
         message = data.strip().split('||')
-        print("{}:{}".format(message[0], message[1]))
+        print("from group {} {}:{}".format(message[0], message[1], message[2]))
 
 
 func_dict = {'1': {'fun': register, 'explain': '注册'},

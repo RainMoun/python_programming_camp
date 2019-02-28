@@ -25,7 +25,7 @@ def receive_single_chat_message():  # 接受到的信息为单人聊天请求
 
 def receive_group_chat_message():  # 接受到的信息为群聊请求
     group_dict = list(data[2].split())
-    messages = (data[1] + '||' + data[3]).encode('utf-8')
+    messages = (data[1] + '||' + data[3] + '||' + data[4]).encode('utf-8')
     for i in group_dict:
         if i in user_message.keys():
             sock.sendto(messages, user_message[i])
