@@ -105,7 +105,8 @@ def run():
         while True:
             data = conn.recv(1024)
             data = data.decode('utf-8')
-            flag, remain_msg = data.split('||')
+            flag, remain_msg = data.split('||')  # 识别用户发来的信息类型，1为申请注册，2为申请登录，3为用户申请下载
+            # 文件，4为管理员上传文件， 5为普通用户上传文件， 6为用户开通会员请求
             func_dict[flag](conn, remain_msg)
             break
         conn.close()
