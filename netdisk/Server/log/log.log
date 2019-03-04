@@ -1,0 +1,22 @@
+
+2019-02-26 10:51:43 AM - root - INFO -common_interface:  yufeng µÇÂ½
+2019-02-26 10:52:02 AM - root - INFO -server_start:  yufeng upload 2.txt, the md5 is 140d09f9b3c2e41c46ba97ddb7033ab4
+2019-02-26 10:54:33 AM - root - INFO -common_interface:  yufeng µÇÂ½
+2019-02-26 10:54:41 AM - root - INFO -server_start:  yufeng upload 22.txt, the md5 is 140d09f9b3c2e41c46ba97ddb7033ab4
+2019-02-26 10:56:36 AM - root - INFO -common_interface:  yufeng µÇÂ½
+2019-02-26 10:57:29 AM - root - INFO -common_interface:  yufeng µÇÂ½
+2019-02-26 10:57:39 AM - root - INFO -server_start:  yufeng upload 44.txt, the md5 is 140d09f9b3c2e41c46ba97ddb7033ab4
+2019-02-26 14:03:01 PM - root - INFO -common_interface:  yufeng µÇÂ½
+2019-02-26 14:03:16 PM - root - INFO -server_start:  yufeng upload 77.txt, the md5 is 140d09f9b3c2e41c46ba97ddb7033ab4
+2019-02-26 14:09:23 PM - root - INFO -common_interface:  yufeng µÇÂ½
+2019-02-26 14:09:31 PM - root - INFO -server_start:  yufeng upload 99.txt, the md5 is 140d09f9b3c2e41c46ba97ddb7033ab4
+2019-02-26 14:11:52 PM - root - INFO -common_interface:  yufeng µÇÂ½
+2019-02-26 14:12:00 PM - root - INFO -server_start:  yufeng upload 111.txt, the md5 is 140d09f9b3c2e41c46ba97ddb7033ab4
+2019-02-26 14:12:20 PM - root - INFO -server_start:  yufeng upload 222.txt, the md5 is 7d95ccf8eea8222889bb5a3bb9d5f972
+2019-03-04 10:43:33 AM - root - INFO -src:  yufeng upload result.txt, the md5 is 9939c40b6c18564c81959a61aadf91be
+2019-03-04 14:33:58 PM - root - INFO -db_handler:  Kobe upload inception_dec_2015.zip, the md5 is abb06016685bbf7e849b707b00be2754
+2019-03-04 14:43:16 PM - root - INFO -db_handler:  Kobe upload handson-ml-master.zip, the md5 is 6fcd53aa8a34da095af8f910555f3051
+2019-03-04 14:47:54 PM - root - INFO -db_handler:  Kobe upload 1.rar, the md5 is 72625edb4109a9144c5ae8598f2cbcd9
+2019-03-04 14:49:32 PM - root - INFO -db_handler:  James upload 1.rar, the md5 is 72625edb4109a9144c5ae8598f2cbcd9
+2019-03-04 19:02:30 PM - root - INFO -db_handler:  Kobe upload handson-ml-master.zip, the md5 is 6fcd53aa8a34da095af8f910555f3051
+2019-03-04 20:41:34 PM - root - INFO -db_handler:  James upload handson-ml-master.zip, the md5 is 6fcd53aa8a34da095af8f910555f3051
