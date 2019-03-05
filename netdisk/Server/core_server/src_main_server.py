@@ -1,4 +1,5 @@
 import socket
+import time
 from conf_server import setting
 from db import models, db_handler
 
@@ -82,18 +83,21 @@ def join_member(conn, user_name):
     conn.send(msg)
 
 
+def time_synchronization(conn, server_name):
+    fmt = '%Y/%m/%d %X'
+    time_now = time.strftime(fmt)
+    conn.send(time_now.encode('utf-8'))  # 给子服务器发送信息
+
+
 func_dict = {
     '1': register,
     '2': login,
     '3': download_file_for_user,  # 用户下载文件
     '4': upload_file_for_admin,  # 管理员上传文件
     '5': upload_file_for_user,  # 用户上传文件
-    '6': join_member
+    '6': join_member,
+    '7': time_synchronization
 }
-
-
-def time_synchronization():
-    pass
 
 
 def run():
@@ -106,7 +110,7 @@ def run():
             data = conn.recv(1024)
             data = data.decode('utf-8')
             flag, remain_msg = data.split('||')  # 识别用户发来的信息类型，1为申请注册，2为申请登录，3为用户申请下载
-            # 文件，4为管理员上传文件， 5为普通用户上传文件， 6为用户开通会员请求
+            # 文件，4为管理员上传文件， 5为普通用户上传文件， 6为用户开通会员请求， 7为其他服务器的时间同步请求
             func_dict[flag](conn, remain_msg)
             break
         conn.close()

@@ -1,4 +1,6 @@
 import socket
+import time
+import win32api
 from conf_server import setting
 from db import models, db_handler
 
@@ -93,14 +95,35 @@ func_dict = {
 
 
 def time_synchronization():
-    pass
+    sk = socket.socket()
+    sk.bind(setting.SERVER_ADDRESS_OTHER)
+    sk.connect(setting.SERVER_ADDRESS_MAIN)
+    msg = '7||server_other'.encode('utf-8')
+    sk.send(msg)
+    data = sk.recv(1024)
+    data = data.decode('utf-8')
+    fmt = '%Y/%m/%d %X'
+    current_time = time.strftime(fmt, data)  # 获取当前时间并格式化
+    stamp_array = time.strptime(current_time, fmt)  # 利用strptime()将其转换成时间数组
+    stamp = int(time.mktime(stamp_array))  # 转换为时间戳
+    tm_year, tm_mon, tm_mday, tm_hour, tm_min, tm_sec, tm_wday, tm_yday, tm_isdst = time.gmtime(stamp)
+    win32api.SetSystemTime(tm_year, tm_mon, tm_wday, tm_mday, tm_hour, tm_min, tm_sec, 0)
 
 
 def run():
+    time_begin = time.time()
     sk = socket.socket()
     sk.bind(setting.SERVER_ADDRESS_OTHER)
     sk.listen(3)
     while True:
+        time_now = time.time()
+        if time_now - time_begin >= 60:
+            sk.close()  # 由于一个套接字无法即成为服务器也称为客户端，故先将子服务器的sk关闭，与主服务器进行通信
+            time_synchronization()
+            time_begin = time.time()
+            sk = socket.socket()
+            sk.bind(setting.SERVER_ADDRESS_OTHER)
+            sk.listen(3)
         conn, addr = sk.accept()
         while True:
             data = conn.recv(1024)
