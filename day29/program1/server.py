@@ -10,7 +10,7 @@ mutex = Lock()  # 实例化锁的对象
 server_ip_port = ('127.0.0.1', 8080)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.bind(server_ip_port)
-sock.listen(10)
+sock.listen(3)
 
 
 def operate(client, address, lock):
