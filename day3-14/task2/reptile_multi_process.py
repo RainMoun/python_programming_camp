@@ -4,27 +4,25 @@ from threading import Thread, Lock
 from multiprocessing import JoinableQueue
 
 
-def get_one_page(url):
-    headers = {
-        'User-Agent': 'Mozilla/5.0(Macintosh;Intel Mac OS X10_13_3) AppleWebKit/537.36(KHTML, like Gecko)'
-                      'Chrome/65.0.3325.162 Safari/537.36'
-    }
-    response = requests.get(url, headers=headers)
+def get_one_page(url, page):
+    # headers = {
+    #     'User-Agent': 'Mozilla/5.0(Macintosh;Intel Mac OS X10_13_3) AppleWebKit/537.36(KHTML, like Gecko)'
+    #                   'Chrome/65.0.3325.162 Safari/537.36'
+    # }
+    form_data = {'type': 'index',
+                 'pageIndex': page}
+    # response = requests.get(url, headers=headers)
+    response = requests.post(url, data=form_data)
     if response.status_code == 200:
         return response.text
     return None
 
 
 def find_page_content(page, queue):  # 只能读取第一页的信息
-    if page == 1:
-        suffix = ''
-    else:
-        suffix = '#p{}'.format(page)
-    url = 'https://www.cnblogs.com/' + suffix
-    html = get_one_page(url)
+    url = 'https://www.cnblogs.com/'
+    html = get_one_page(url, page)
     pattern = re.compile('<h3>.*?href="(.*?)".*?target.*?>(.*?)</a>', re.S)
     items = re.findall(pattern, html)
-    print(items)
     content = []
     for i in items:
         pattern = re.compile('.*?python.*?', flags=re.IGNORECASE)
