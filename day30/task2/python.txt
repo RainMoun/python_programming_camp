@@ -1,0 +1,8 @@
+
+标题： 零基础学Python--------第9章 异常处理及程序调试  网址： https://www.cnblogs.com/ooo888ooo/p/10360656.html
+标题： Python面向对象之魔术方法  网址： https://www.cnblogs.com/wanlei/p/10544036.html
+标题： python开发之虚拟环境管理：virtualenv、virtualenvwrapper、pycharm  网址： https://www.cnblogs.com/chenhuabin/p/10538773.html
+标题： 初学Python的一些细节  网址： https://www.cnblogs.com/wotoufahaiduo/p/10548182.html
+标题： Python3+Selenium2完整的自动化测试实现之旅（六）：Python单元测试模块Unittest运用  网址： https://www.cnblogs.com/tdp0108/p/10541445.html
+标题： Python进阶：如何将字符串常量转化为变量？  网址： https://www.cnblogs.com/pythonista/p/10546215.html
+标题： 大数据项目之_15_帮助文档_NTP 配置时间服务器+Linux 集群服务群起脚本+CentOS6.8 升级到 python 到 2.7  网址： https://www.cnblogs.com/chenmingjun/p/10545638.html
