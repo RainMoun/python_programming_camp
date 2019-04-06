@@ -21,10 +21,10 @@ def operate(client, address, lock):
             num = f.readline()
         if int(num) <= 0:
             client.send('0'.encode('utf-8'))
-            time.sleep(random.uniform(1, 2))  # 仿真网络延迟
+            time.sleep(random.uniform(0.1, 0.2))  # 仿真网络延迟
         else:
             client.send('1'.encode('utf-8'))
-            time.sleep(random.uniform(1, 2))  # 仿真网络延迟
+            time.sleep(random.uniform(0.1, 0.2))  # 仿真网络延迟
         lock.release()
     else:  # 用户申请买票
         lock.acquire()
@@ -32,13 +32,13 @@ def operate(client, address, lock):
             num = f.readline()
         if int(num) <= 0:
             client.send('0'.encode('utf-8'))
-            time.sleep(random.uniform(1, 2))  # 仿真网络延迟
+            time.sleep(random.uniform(0.1, 0.2))  # 仿真网络延迟
         else:
             num = int(num) - 1
             with open("./train ticket.txt", 'w') as f:
                 f.write(str(num))
             client.send('1'.encode('utf-8'))
-            time.sleep(random.uniform(1, 2))  # 仿真网络延迟
+            time.sleep(random.uniform(0.1, 0.2))  # 仿真网络延迟
         lock.release()
 
 
